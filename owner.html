@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lodge Owner Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+}
+header {
+    background: #2e7d32;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+section {
+    background: white;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background: #256428;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Lodge Owner Portal</h1>
+</header>
+
+<section>
+    <h2>Owner Registration</h2>
+    <form id="registerForm">
+        <input type="text" id="ownerName" placeholder="Owner Name" required>
+        <input type="text" id="lodgeName" placeholder="Lodge Name" required>
+        <input type="text" id="location" placeholder="City / Area" required>
+        <input type="email" id="ownerEmail" placeholder="Email" required>
+        <input type="password" id="ownerPassword" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <h2>Owner Login</h2>
+    <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</section>
+
+<script>
+let owners = []; // This stores owners temporarily
+
+// Owner registration
+document.getElementById('registerForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const owner = {
+        name: document.getElementById('ownerName').value,
+        lodge: document.getElementById('lodgeName').value,
+        location: document.getElementById('location').value,
+        email: document.getElementById('ownerEmail').value,
+        password: document.getElementById('ownerPassword').value
+    };
+    owners.push(owner);
+    alert("Owner Registered Successfully! You can login now.");
+    this.reset();
+});
+
+// Owner login
+document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    const owner = owners.find(o => o.email === email && o.password === password);
+    if(owner){
+        alert("Login Successful! Welcome " + owner.name);
+        localStorage.setItem('currentOwner', JSON.stringify(owner)); // save temporarily
+        window.location.href = 'index.html'; // redirect to customer booking page
+    } else {
+        alert("Invalid email or password!");
+    }
+});
+</script>
+
+</body>
+</html>
