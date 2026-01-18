@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shree Lodge Room Booking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body { font-family: Arial, sans-serif; background: #f2f2f2; margin:0; }
+header { background:#2e7d32; color:white; padding:25px; text-align:center; }
+section { background:white; max-width:700px; margin:20px auto; padding:20px; border-radius:8px; box-shadow:0 0 6px rgba(0,0,0,0.1); }
+input, select, button { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ccc; }
+button { background:#2e7d32; color:white; border:none; cursor:pointer; }
+button:hover{ background:#256428; }
+p.note{ color:red; font-weight:bold; }
+nav { text-align:center; margin-bottom:15px; }
+nav a { margin:0 15px; text-decoration:none; color:#2e7d32; font-weight:bold; }
+nav a:hover { text-decoration:underline; }
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Shree Lodge Booking</h1>
+<p>Book your room 30 minutes before arrival</p>
+</header>
+
+<!-- Navigation -->
+<nav>
+    <a href="index.html">Home</a>
+    <a href="owner.html">Owner Login</a>
+</nav>
+
+<section>
+<h2>Room Booking Form</h2>
+<form id="bookingForm">
+    <input type="text" id="custName" placeholder="Your Name" required>
+    <input type="tel" id="custPhone" placeholder="Mobile Number" required>
+    <input type="time" id="checkinTime" required>
+    <select id="roomType">
+        <option>Single Room</option>
+        <option>Double Room</option>
+        <option>Family Room</option>
+    </select>
+    <p class="note">Note: Please bring your Aadhaar card with you at check-in.</p>
+    <button type="submit">Book Room</button>
+</form>
+</section>
+
+<script>
+// Get owner info from localStorage
+const owner = JSON.parse(localStorage.getItem('currentOwner'));
+
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    if(!owner){
+        alert("No lodge owner logged in! Customer booking cannot proceed.");
+        return;
+    }
+
+    const booking = {
+        customer: document.getElementById('custName').value,
+        phone: document.getElementById('custPhone').value,
+        time: document.getElementById('checkinTime').value,
+        room: document.getElementById('roomType').value
+    };
+
+    // Show booking successful to customer
+    alert(`Booking Successful!\nLodge Owner: ${owner.name}\nLodge: ${owner.lodge}`);
+
+    // Send booking notification to lodge owner (simulated)
+    alert(`Notification to Owner (${owner.name}):\nCustomer ${booking.customer} booked a ${booking.room} at ${booking.time}. Contact: ${booking.phone}`);
+
+    this.reset();
+});
+</script>
+
+</body>
+</html>
